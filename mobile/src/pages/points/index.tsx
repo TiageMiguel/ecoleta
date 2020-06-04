@@ -41,7 +41,7 @@ const Points: React.FC = () => {
             }}
           >
             <MapMarker
-              onPress={() => {}}
+              onPress={() => navigation.navigate('details')}
               coordinate={{
                 latitude: -27.2,
                 longitude: -49.2,
