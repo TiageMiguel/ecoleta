@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
@@ -38,8 +38,15 @@ interface PointProps {
   latitude: number;
 }
 
+interface Params {
+  uf: string;
+  city: string;
+}
+
 const Points: React.FC = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const routeParams = route.params as Params;
 
   const [initialPosition, setInitialPosition] = useState<[number, number]>([
     0,
@@ -90,9 +97,9 @@ const Points: React.FC = () => {
   const loadPoints = async () => {
     const { data } = await api.get('points', {
       params: {
-        city: 'Rio do sul',
-        uf: 'SC',
-        items: [1, 2],
+        city: routeParams.city,
+        uf: routeParams.uf,
+        items: selectedItems,
       },
     });
 
@@ -104,6 +111,10 @@ const Points: React.FC = () => {
     loadItems();
     loadPoints();
   }, []);
+
+  useEffect(() => {
+    loadPoints();
+  }, [selectedItems]);
 
   return (
     <>

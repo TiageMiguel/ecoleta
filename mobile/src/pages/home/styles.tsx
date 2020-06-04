@@ -5,6 +5,12 @@ import styled from 'styled-components/native';
 import backgroundSource from '~/../assets/home-background.png';
 import logoSource from '~/../assets/logo.png';
 
+export const Page = styled.KeyboardAvoidingView.attrs({
+  behavior: 'padding',
+})`
+  flex: 1;
+`;
+
 export const Container = styled.ImageBackground.attrs({
   source: backgroundSource,
   imageStyle: {
@@ -78,12 +84,13 @@ export const ArrowRightIcon = styled(Feather).attrs({
   color: ${props => props.theme.colors.white};
 `;
 
+export const Input = styled.TextInput`
+  height: 60px;
+  background: ${props => props.theme.colors.white};
+  border-radius: 10px;
+  margin-bottom: 8px;
+  padding: 0 24px;
+  font-size: 16px;
+`;
+
 //   select: {},
-//   input: {
-//     height: 60,
-//     backgroundColor: '#FFF',
-//     borderRadius: 10,
-//     marginBottom: 8,
-//     paddingHorizontal: 24,
-//     fontSize: 16,
-//   },
