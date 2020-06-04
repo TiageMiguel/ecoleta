@@ -1,8 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { composeAsync } from 'expo-mail-composer';
+import React, { useState, useEffect } from 'react';
+import { Linking } from 'react-native';
 
 import {
-  Page,
   Container,
   BackButton,
   ArrowLeftIcon,
@@ -19,8 +20,56 @@ import {
   WhatsappIcon,
 } from './styles';
 
+import api from '~/services';
+
+interface Params {
+  id: number;
+}
+
+interface PointProps {
+  point: {
+    image: string;
+    name: string;
+    whatsapp: string;
+    city: string;
+    uf: string;
+    email: string;
+  };
+  items: {
+    title: string;
+  }[];
+}
+
 const Details: React.FC = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const [point, setPoint] = useState<PointProps>({} as PointProps);
+
+  const routeParams = route.params as Params;
+
+  const handleWhatsapp = () => {
+    Linking.openURL(
+      `whatsapp://send?phone=${point.point.whatsapp}&text=Tenho interesse sobre a coleta de resíduos`
+    );
+  };
+
+  const sendMail = () => {
+    composeAsync({
+      subject: 'Interesse na coleta de resíduos',
+      recipients: [point.point.email],
+    });
+  };
+
+  const loadPoint = async () => {
+    const { data } = await api.get(`points/${routeParams.id}`);
+
+    setPoint(data);
+  };
+
+  useEffect(() => {
+    loadPoint();
+  }, []);
 
   return (
     <>
@@ -30,23 +79,26 @@ const Details: React.FC = () => {
         </BackButton>
         <PointImage
           source={{
-            uri:
-              'https://gitlab.com/Tiage/next-level-week/-/raw/master/assets/1920x1080.jpg',
+            uri: point.point.image,
           }}
         />
-        <PointName>Mercadao do joao</PointName>
-        <PointItems>Lampadas, oleo de cozinhas, outros</PointItems>
+        <PointName>{point.point.name}</PointName>
+        <PointItems>
+          {point.items.map(item => item.title).join(', ')}
+        </PointItems>
         <Address>
           <AddressTitle>Endereço</AddressTitle>
-          <AddressContent>Rio do Sul, SC</AddressContent>
+          <AddressContent>
+            {point.point.city}, {point.point.uf}
+          </AddressContent>
         </Address>
       </Container>
       <Footer>
-        <Button>
+        <Button onPress={handleWhatsapp}>
           <WhatsappIcon />
           <ButtonText>Whatsapp</ButtonText>
         </Button>
-        <Button>
+        <Button onPress={sendMail}>
           <MailIcon />
           <ButtonText>E-mail</ButtonText>
         </Button>

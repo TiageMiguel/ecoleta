@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import Constants from 'expo-constants';
+import { RectButton } from 'react-native-gesture-handler';
 import MapView, { Marker } from 'react-native-maps';
 import styled from 'styled-components/native';
 
@@ -64,7 +65,7 @@ interface ItemProps {
   selected?: boolean;
 }
 
-export const Item = styled.TouchableOpacity.attrs({})<ItemProps>`
+export const Item = styled(RectButton).attrs({})<ItemProps>`
   background-color: ${props => props.theme.colors.white};
   border: 2px solid
     ${props => (props.selected ? props.theme.colors.green : '#eee')};
