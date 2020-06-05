@@ -1,2 +1,1 @@
-# Ecoleta Backend
-### as
+# Ecoleta server

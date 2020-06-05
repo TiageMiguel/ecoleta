@@ -1,1 +1,1 @@
-# Ecoleta web
+# Ecoleta web application
