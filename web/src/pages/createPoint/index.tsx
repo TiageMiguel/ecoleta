@@ -134,8 +134,6 @@ const CreatePoint: React.FC = () => {
   const loadItems = async () => {
     const { data } = await api.get('/items');
 
-    console.log(data);
-
     setItems(data);
   };
 

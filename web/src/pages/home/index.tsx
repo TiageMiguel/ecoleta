@@ -21,7 +21,9 @@ const Home: React.FC = () => {
         </Header>
         <Main>
           <Title>Seu marketplace de coleta de resíduos.</Title>
-          <Subtitle>Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente.</Subtitle>
+          <Subtitle>
+            Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente.
+          </Subtitle>
           <ActionButton to='/create-point'>
             <span>
               <FiLogIn />
