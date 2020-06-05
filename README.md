@@ -15,7 +15,6 @@ Read more about each tecnology used in different parts of this project.
 - [Web](/web/)
 - [Mobile](/mobile/)
 
-----
-### 📃 License
+## 📃 License
 
 The Ecoleta source code is made available under the [MIT license](LICENSE).
