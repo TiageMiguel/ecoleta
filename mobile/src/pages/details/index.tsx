@@ -45,7 +45,7 @@ const Details: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const [point, setPoint] = useState<PointProps>({} as PointProps);
+  const [point, setPoint] = useState<PointProps | null>(null);
 
   const routeParams = route.params as Params;
 
@@ -65,6 +65,8 @@ const Details: React.FC = () => {
   const loadPoint = async () => {
     const { data } = await api.get(`points/${routeParams.id}`);
 
+    console.log(data);
+
     setPoint(data);
   };
 
@@ -78,7 +80,9 @@ const Details: React.FC = () => {
         <BackButton onPress={() => navigation.goBack()}>
           <ArrowLeftIcon />
         </BackButton>
-        <PointImage
+         {point !== null && (
+           <>
+                   <PointImage
           source={{
             uri: point.point.image_url,
           }}
@@ -93,8 +97,10 @@ const Details: React.FC = () => {
             {point.point.city}, {point.point.uf}
           </AddressContent>
         </Address>
+           </>
+         )}
       </Container>
-      <Footer>
+      <Footer> 
         <Button onPress={handleWhatsapp}>
           <WhatsappIcon />
           <ButtonText>Whatsapp</ButtonText>
@@ -103,7 +109,7 @@ const Details: React.FC = () => {
           <MailIcon />
           <ButtonText>E-mail</ButtonText>
         </Button>
-      </Footer>
+        </Footer> 
     </>
   );
 };

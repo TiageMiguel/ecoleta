@@ -24,13 +24,11 @@ class PointsController {
       .where('point_items.point_id', id)
       .select('items.title');
 
-    return response.json({ serializedPoint, items });
+    return response.json({ point: serializedPoint, items });
   }
 
   async index(request: Request, response: Response): Promise<Response> {
     const { city, uf, items } = request.query;
-
-    console.log(request.query);
 
     const parsedItems = String(items)
       .split(',')
