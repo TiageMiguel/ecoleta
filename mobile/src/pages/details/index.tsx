@@ -80,27 +80,27 @@ const Details: React.FC = () => {
         <BackButton onPress={() => navigation.goBack()}>
           <ArrowLeftIcon />
         </BackButton>
-         {point !== null && (
-           <>
-                   <PointImage
-          source={{
-            uri: point.point.image_url,
-          }}
-        />
-        <PointName>{point.point.name}</PointName>
-        <PointItems>
-          {point.items.map(item => item.title).join(', ')}
-        </PointItems>
-        <Address>
-          <AddressTitle>Endereço</AddressTitle>
-          <AddressContent>
-            {point.point.city}, {point.point.uf}
-          </AddressContent>
-        </Address>
-           </>
-         )}
+        {point !== null && (
+          <>
+            <PointImage
+              source={{
+                uri: point.point.image_url,
+              }}
+            />
+            <PointName>{point.point.name}</PointName>
+            <PointItems>
+              {point.items.map(item => item.title).join(', ')}
+            </PointItems>
+            <Address>
+              <AddressTitle>Endereço</AddressTitle>
+              <AddressContent>
+                {point.point.city}, {point.point.uf}
+              </AddressContent>
+            </Address>
+          </>
+        )}
       </Container>
-      <Footer> 
+      <Footer>
         <Button onPress={handleWhatsapp}>
           <WhatsappIcon />
           <ButtonText>Whatsapp</ButtonText>
@@ -109,7 +109,7 @@ const Details: React.FC = () => {
           <MailIcon />
           <ButtonText>E-mail</ButtonText>
         </Button>
-        </Footer> 
+      </Footer>
     </>
   );
 };
