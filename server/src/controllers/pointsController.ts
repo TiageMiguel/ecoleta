@@ -30,6 +30,8 @@ class PointsController {
   async index(request: Request, response: Response): Promise<Response> {
     const { city, uf, items } = request.query;
 
+    console.log(request.query);
+
     const parsedItems = String(items)
       .split(',')
       .map(items => Number(items.trim()));

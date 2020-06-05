@@ -98,8 +98,8 @@ const Points: React.FC = () => {
   const loadPoints = async () => {
     const { data } = await api.get('points', {
       params: {
-        city: routeParams.city,
-        uf: routeParams.uf,
+        city: routeParams.city || '',
+        uf: routeParams.uf || '',
         items: selectedItems,
       },
     });

@@ -1,6 +1,6 @@
 # Next Level Week
 
-![Example 1](/assets/1920x1080.jpg)
+![Example 1](/assets/example.png)
 
 **Ecoleta** is a open source project, developed during the Next Level Week, hosted by [Rocketseat](https://rocketseat.com.br).
 
