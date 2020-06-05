@@ -4,6 +4,7 @@ import { FiArrowLeft } from 'react-icons/fi';
 import { TileLayer, Marker } from 'react-leaflet';
 import { useHistory } from 'react-router-dom';
 
+import Dropzone from '../../components/dropzone';
 import api from '../../services';
 import {
   Container,
@@ -47,12 +48,19 @@ const CreatePoint: React.FC = () => {
   const [states, setStates] = useState<string[]>([]);
   const [cities, setCities] = useState<string[]>([]);
 
-  const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([
+    0,
+    0,
+  ]);
 
   const [selectedUF, setSelectedUF] = useState('0');
   const [selectedCity, setSelectedCity] = useState('0');
+  const [selectedFile, setSelectedFile] = useState<File>();
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
-  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0, 0]);
+  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
+    0,
+    0,
+  ]);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -102,16 +110,20 @@ const CreatePoint: React.FC = () => {
     const [latitude, longitude] = selectedPosition;
     const items = selectedItems;
 
-    const data = {
-      name,
-      email,
-      whatsapp,
-      uf,
-      city,
-      latitude,
-      longitude,
-      items,
-    };
+    const data = new FormData();
+
+    data.append('name', name);
+    data.append('email', email);
+    data.append('whatsapp', whatsapp);
+    data.append('uf', uf);
+    data.append('city', city);
+    data.append('latitude', String(latitude));
+    data.append('longitude', String(longitude));
+    data.append('items', items.join(','));
+
+    if (selectedFile) {
+      data.append('image', selectedFile);
+    }
 
     await api.post('/points', data);
 
@@ -182,18 +194,29 @@ const CreatePoint: React.FC = () => {
           Cadastro do
           <br /> ponto de coleta
         </FormTitle>
+        <Dropzone onFileUploaded={setSelectedFile} />
         <FormItem>
           <legend>
             <h2>Dados</h2>
           </legend>
           <FormField>
             <FormFieldLabel htmlFor='name'>Nome da entidade</FormFieldLabel>
-            <FormFieldInput type='text' name='name' id='name' onChange={handleInputChange} />
+            <FormFieldInput
+              type='text'
+              name='name'
+              id='name'
+              onChange={handleInputChange}
+            />
           </FormField>
           <FormFieldGroup>
             <FormField>
               <FormFieldLabel htmlFor='email'>Email</FormFieldLabel>
-              <FormFieldInput type='email' name='email' id='email' onChange={handleInputChange} />
+              <FormFieldInput
+                type='email'
+                name='email'
+                id='email'
+                onChange={handleInputChange}
+              />
             </FormField>
             <FormField>
               <FormFieldLabel htmlFor='whatsapp'>Whatsapp</FormFieldLabel>
@@ -211,7 +234,11 @@ const CreatePoint: React.FC = () => {
             <h2>Endereço</h2>
             <span>Selecione o endereço no mapa</span>
           </legend>
-          <MapContainer center={initialPosition} zoom={15} onclick={handleMapClick}>
+          <MapContainer
+            center={initialPosition}
+            zoom={15}
+            onclick={handleMapClick}
+          >
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -221,7 +248,12 @@ const CreatePoint: React.FC = () => {
           <FormFieldGroup>
             <FormField>
               <FormFieldLabel htmlFor='uf'>Estado (UF)</FormFieldLabel>
-              <FormFieldSelect name='uf' id='uf' value={selectedUF} onChange={handleSelectUF}>
+              <FormFieldSelect
+                name='uf'
+                id='uf'
+                value={selectedUF}
+                onChange={handleSelectUF}
+              >
                 <option value='0'> Selecione uma UF </option>
                 {states.map(uf => (
                   <option key={uf} value={uf}>

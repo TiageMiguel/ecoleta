@@ -29,6 +29,7 @@ interface Params {
 interface PointProps {
   point: {
     image: string;
+    image_url: string;
     name: string;
     whatsapp: string;
     city: string;
@@ -79,7 +80,7 @@ const Details: React.FC = () => {
         </BackButton>
         <PointImage
           source={{
-            uri: point.point.image,
+            uri: point.point.image_url,
           }}
         />
         <PointName>{point.point.name}</PointName>
