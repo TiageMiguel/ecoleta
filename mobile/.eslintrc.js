@@ -1,5 +1,9 @@
 module.exports = {
-  extends: ['universe/native', 'universe/shared/typescript-analysis', 'prettier'],
+  extends: [
+    'universe/native',
+    'universe/shared/typescript-analysis',
+    'prettier',
+  ],
   plugins: ['react', 'prettier'],
   overrides: [
     {

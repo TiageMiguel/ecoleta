@@ -1,4 +1,4 @@
-# Next Level Week
+# Ecoleta
 
 ![Ecoleta overview](/assets/ecoleta.png)
 
